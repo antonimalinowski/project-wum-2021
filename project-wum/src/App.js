@@ -2,6 +2,7 @@ import React from 'react';
 // import logo from './logo.svg';
 import Fiszki from './Data/set1';
 import Card from './Card';
+import DrawButton from './DrawButton';
 import './App.css';
 
 class App extends React.Component {
@@ -9,25 +10,27 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    this.updateCard = this.updateCard.bind(this);
+
     this.state = {
       cards: [
         {
-            question: 'Wyjaśnij pojęcie niedożywienie, uwzględniając najważniejsze informacje',
-            frontimage: '',
-            answer: 'Stan wynikający z braku wchłaniania lub braku spożywania substancji żywieniowych, prowadzący do zmiany składu ciała, upośledzenia fizycznej i mentalnej funkcji organizmu oraz wpływający niekorzystnie na wynik leczenia choroby podstawowej',
-            backimage: 'https://randomuser.me/api/portraits/men/75.jpg',
+          question: 'Wyjaśnij pojęcie niedożywienie, uwzględniając najważniejsze informacje',
+          frontimage: '',
+          answer: 'Stan wynikający z braku wchłaniania lub braku spożywania substancji żywieniowych, prowadzący do zmiany składu ciała, upośledzenia fizycznej i mentalnej funkcji organizmu oraz wpływający niekorzystnie na wynik leczenia choroby podstawowej',
+          backimage: 'https://randomuser.me/api/portraits/men/75.jpg',
         },
         {
-            question: 'PRAWDA/ FAŁSZ: Chorym ze znaczną nadwagą lub otyłością najczęściej towarzyszy niedożywienie typu Kwashiorkor.',
-            frontimage: '',
-            answer: 'PRAWDA',
-            backimage: './Images/grafika 18.jpg',
+          question: 'PRAWDA/ FAŁSZ: Chorym ze znaczną nadwagą lub otyłością najczęściej towarzyszy niedożywienie typu Kwashiorkor.',
+          frontimage: '',
+          answer: 'PRAWDA',
+          backimage: './Images/grafika 18.jpg',
         },
         {
-            question: 'Wymień 3 typy niedożywienia',
-            frontimage: '',
-            answer: 'Niedożywienie typu marasmus (niedożywienie białkowo-kaloryczne), \n Niedożywienie typu kwashiorkor (niedożywienie białkowe), \n Niedożywienie mieszane \n',
-            backimage: '',
+          question: 'Wymień 3 typy niedożywienia',
+          frontimage: '',
+          answer: 'Niedożywienie typu marasmus (niedożywienie białkowo-kaloryczne), \n Niedożywienie typu kwashiorkor (niedożywienie białkowe), \n Niedożywienie mieszane \n',
+          backimage: '',
         },
         {
           question: 'Jaką znasz inną nazwę na niedożywienie typu marasmus?',
@@ -65,14 +68,26 @@ class App extends React.Component {
     return(card);
   }
 
+  updateCard() {
+    const currentCards = this.state.cards
+    this.setState({
+      currentCard: this.getRandomCard(currentCards)
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <Card
-          question={this.state.currentCard.question}
-          frontimage={this.state.currentCard.frontimage}
-          answer={this.state.currentCard.answer}
-          backimage={this.state.currentCard.backimage}/>
+        <div>
+          <Card
+            question={this.state.currentCard.question}
+            frontimage={this.state.currentCard.frontimage}
+            answer={this.state.currentCard.answer}
+            backimage={this.state.currentCard.backimage}/>
+        </div>
+        <div>
+          <DrawButton drawCard={this.updateCard}/>
+        </div>
       </div>
     );
   }
